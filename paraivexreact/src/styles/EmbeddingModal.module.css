@@ -1,0 +1,80 @@
+/* src/styles/EmbeddingModal.module.css */
+
+/* Overlay that darkens the background when the modal is open */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;	
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+/*
+    justify-content: center;
+    align-items: center;
+*/
+    z-index: 1000;
+    cursor: grab; /* Shows the grab cursor when hovering */
+}
+
+/* Container for the modal content */
+.modalContainer {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Shadow for tile effect */
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    cursor: default; /* Switch cursor for the content area */
+    position: absolute; /* Enable dragging */
+}
+
+/* Title styling */
+.modalContainer h2 {
+    margin-top: 0;
+    font-size: 1.5em;
+    color: #333;
+}
+
+/* Close button styling */
+.closeButton {
+    display: block;
+    margin: 15px auto 0;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.closeButton:hover {
+    background-color: #0056b3;
+}
+
+/* Container for each AddEmbedding instance */
+.embeddingContainer {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #f2f2f2;
+    position: relative;
+}
+
+/* Delete button for each embedding (styled as an 'X') */
+.deleteButton {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.deleteButton:hover {
+    color: #d9534f;
+}

@@ -1,0 +1,292 @@
+/*ManageEmbeddings.module.css*/
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: #111; /* Darker, consistent with AddEmbedding */
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1); /* Consistent box-shadow */
+}
+
+h2 {
+    text-align: center;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.tagButton {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.activeTag {
+    background-color: #3a506b;
+}
+
+.embeddingList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.embeddingItem {
+    padding: 15px;
+    background-color: #222;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.viewButton, .deleteButton {
+    background-color: #3a506b;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.deleteButton {
+    background-color: #f44336;
+}
+
+.deleteButton:hover, .viewButton:hover {
+    background-color: #2c3e50; /* For delete, use #ff6b6b as hover effect */
+}
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalContent {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+    color: #fff;
+}
+
+.closeButton {
+    background-color: #3a506b;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Slightly lighter overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalContent {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    max-width: 500px;
+    width: 90%;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+/* Modal Header */
+h3 {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Field Container */
+.field {
+    margin-bottom: 20px;
+}
+
+.fieldLabel {
+    font-weight: 500;
+    color: #555;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* Multi-Select Brain Option */
+.multiSelect {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.brainOption {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.checkbox {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.brainLabel {
+    font-size: 0.9em;
+    color: #333;
+}
+
+.tagInput {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.input {
+    padding: 8px;
+    flex-grow: 1;
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.addTagButton {
+    background-color: #3a506b;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.addTagButton:hover {
+    background-color: #2c3e50;
+}
+
+.tagList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.tag {
+    background-color: #f1f1f1;
+    color: #333;
+    padding: 6px 10px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.deleteTagButton {
+    background: none;
+    border: none;
+    color: #dc3545;
+    margin-left: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+/* Button Container */
+.buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.updateButton, .cancelButton {
+    flex-grow: 1;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.updateButton {
+    background-color: #3a506b;
+    color: #fff;
+    border: none;
+}
+
+.updateButton:hover {
+    background-color: #2c3e50;
+}
+
+.cancelButton {
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+}
+
+.cancelButton:hover {
+    background-color: #c82333;
+}
+
