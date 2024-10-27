@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
 				setBrains(data.brains || []);
 				setConfigurations(data.configurations || []);
 //				console.log("Fetched Brains in AuthContext:", data.brains);  // Log fetched brains
-//				console.log("Fetched Configurations in AuthContext:", data.configurations);  // Log fetched configurations
+//				console.log("Fetched Configurations in AuthContext:", data.configurations);  // Log Fetched configurations
 			} else {
 				console.error("Failed to fetch user documents:", data.message);
 			}
