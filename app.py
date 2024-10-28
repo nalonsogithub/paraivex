@@ -20,7 +20,14 @@ load_dotenv(dotenv_path=".env")
 app = Flask(__name__, static_folder="paraivexreact/build", static_url_path="/")
 app.secret_key = os.environ.get('SECRET_FLASK_KEY')
 
-CORS(app, resources={r"/api/*": {"origins": ["http://localhost:5000", "http://localhost:3000"]}})
+CORS(app, resources={r"/api/*": {"origins": [
+    "http://localhost:5000",     # Localhost for backend
+    "http://localhost:3000",     # Localhost for frontend
+    "https://paraivex-bmd3d3h2gmgda6cf.eastus2-01.azurewebsites.net",  # Azure default domain
+    "https://www.paraivex.com",  # Primary production domain
+    "https://*.paraivex.com"     # All subdomains of paraivex.com
+]}})
+
 
 api_key = os.getenv('OPENAI_API_KEY')
 organizational_id = os.getenv('ORGANIZATIONAL_ID')

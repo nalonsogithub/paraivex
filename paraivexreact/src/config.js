@@ -2,18 +2,19 @@
 const getBaseURL = () => {
     const hostname = window.location.hostname;
 
-	
-	
     if (hostname === 'localhost') {
         return 'http://localhost:5000';
-    } else if (hostname === 'www.nightengalecelephus.com') {
-        return 'https://www.nightengalecelephus.com';
-    } else if (hostname === 'staging.nightengalecelephus.com') {
-        return 'https://staging.nightengalecelephus.com';
+    } else if (hostname === 'www.paraivex.com') {
+        return 'https://www.paraivex.com';
+    } else if (/\.paraivex\.com$/.test(hostname)) {
+        // Matches any subdomain of paraivex.com (e.g., go.paraivex.com, staging.paraivex.com, etc.)
+        return 'https://www.paraivex.com';
+    } else if (hostname === 'paraivex-bmd3d3h2gmgda6cf.eastus2-01.azurewebsites.net') {
+        return 'https://paraivex-bmd3d3h2gmgda6cf.eastus2-01.azurewebsites.net';
     }
 
-    // Default to production URL if no match
-    return 'http://localhost:5000';
+    // Default to production URL
+    return 'https://www.paraivex.com';
 };
 
 export default getBaseURL;
