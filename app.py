@@ -354,7 +354,7 @@ def similarity_search():
 
 @app.route('/api/ask_stream', methods=["GET", "POST"])
 def ask_stream():
-    # print('IN ASK STREAM')
+    print('IN ASK STREAM')
     # Extract data from request
     data = request.get_json()
     prompt = data['system_prompt']
@@ -362,7 +362,7 @@ def ask_stream():
     assistant_id = os.getenv('OPENAI_ASSITANT_ID')
     formatted_date = None
 
-
+    print('IN ASK STREAM', prompt, assistant_id)
     if not prompt:
         return jsonify({'error': 'No question provided'}), 400
 
@@ -393,7 +393,7 @@ def ask_stream():
         role="user",
         content=prompt,
     )
-
+    print('IN ASK', prompt, assistant_id, thread_id)
     def generate():
         if formatted_date:
             buffer = formatted_date + ' '
@@ -425,10 +425,11 @@ def ask_stream():
 
             # Yield any remaining buffer
             if buffer:
+                # print('BUFFER', buffer)
                 yield buffer
 
         # Check for SITE_LOCATION in the entire response after streaming is done
-        # print('ENTIRE RESPONSE', entire_response)
+        print('ENTIRE RESPONSE', entire_response)
     return Response(stream_with_context(generate()), content_type='text/event-stream')
 
 

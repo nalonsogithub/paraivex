@@ -136,39 +136,55 @@ const ChatBot = ({ prompt, setPrompt, onJsonDetected  }) => {
     }
   }, [aIgentQuickQuestion]);	
 	
-  const handleQuestionClick = (question, index) => {
-    // Add the user question to the chat log
-
-    // Set the user input with the clicked question
-    setUserInput(question);
-
-    // Trigger handleSubmit with the corresponding system prompt
-    const selectedSystemPrompt = questionPrompts[index];
-    handleSubmit(null, selectedSystemPrompt, question);
-  };	
+//  const handleQuestionClick = (question, index) => {
+//    // Add the user question to the chat log
+//
+//    // Set the user input with the clicked question
+//    setUserInput(question);
+//
+//    // Trigger handleSubmit with the corresponding system prompt
+//    const selectedSystemPrompt = questionPrompts[index];
+//    handleSubmit(null, selectedSystemPrompt, question);
+//  };	
 	
 	
 
   const bufferRef = useRef('');	
 
 	//  const handleSubmit = async (event, prompt = null, input = userInput, questionID = null) => {
-const handleSubmit = async (inputPrompt, event = null, shouldPreventDefault = true) => {
-    if (shouldPreventDefault && event) {
+//const handleSubmit = async (prompt, event = null, shouldPreventDefault = true) => {
+//
+//    if (shouldPreventDefault && event) {
+//        event.preventDefault();
+//        console.log("Default action prevented");
+//	}
+//
+//    // Check that values are not empty
+//    if (!prompt.trim()) {
+//        console.log("prompt is empty.");
+//        return;  // Early exit if no data is present
+//    }
+//
+//	
+//
+//    const input = prompt;
+//    const question = prompt;
+const handleSubmit = async (event, promptOverride = null) => {
+    // Prevent default form submission behavior
+    if (event) {
         event.preventDefault();
-        console.log("Default action prevented");
-	}
-//    if (event) event.preventDefault();
-
-    // Check that values are not empty
-    if (!prompt.trim()) {
-        console.log("prompt is empty.");
-        return;  // Early exit if no data is present
     }
+    const currentPrompt = promptOverride || prompt;
+    
+    if (!currentPrompt.trim()) {
+        console.log("Prompt is empty.");
+        return;
+    }	
+	
+	
 
-	  
-
-    const input = prompt;
-    const question = prompt;
+    const input = currentPrompt;
+    const question = currentPrompt;
 	
 	// CLEAR PROMPT
 	setPrompt("");
@@ -188,6 +204,7 @@ const handleSubmit = async (inputPrompt, event = null, shouldPreventDefault = tr
     setMessages(prevMessages => [...prevMessages, { user: "User", text: question }]);
     setUserInput("");
 
+	
     // Initialize AbortController to allow canceling
     const controller = new AbortController();
     controllerRef.current = controller; // Store reference to the controller
@@ -328,7 +345,7 @@ const handleSubmit = async (inputPrompt, event = null, shouldPreventDefault = tr
     // Handle follow-up click without preventing default
 	const handleFollowupClick = () => {
 		console.log("Follow-up clicked with question:", followup);
-		handleSubmit(followup, null, false); // Pass `null` for event and `false` for preventDefault
+		handleSubmit(null, followup); // Pass `null` for event and `false` for preventDefault
 	};
 	
   // Helper function to extract the OWQQ word (single word response)

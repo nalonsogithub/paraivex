@@ -5,10 +5,12 @@ import Draggable from 'react-draggable';
 import { useAuth } from '../contexts/AuthContext';
 import AddEmbedding from './AddEmbedding';
 import styles from '../styles/EmbeddingModal.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const EmbeddingModal = ({ onClose }) => {
     const { responseEmbeddings = {}, setResponseEmbeddings } = useAuth();
     const [embeddings, setEmbeddings] = useState(Array.isArray(responseEmbeddings.embeddings) ? responseEmbeddings.embeddings : []);
+	const navigate = useNavigate();
 
     useEffect(() => {
         console.log("responseEmbeddings in EmbeddingModal:", responseEmbeddings);
@@ -26,19 +28,39 @@ const EmbeddingModal = ({ onClose }) => {
         handleDelete(index); // Remove the saved embedding from the list
     };
 	
+    const handleBackToChat = () => {
+        navigate('/chat-component');
+    };	
+	
     return (
-        <Draggable handle=".handle" defaultPosition={{ x: 50, y: 50 }}>
             <div className={styles.modalContainer}>
+				{/* Title bar with three sections */}
+				<div className="handle">
+				  <div className={styles.modalTitleBar}>
+					<div className={styles.modalTitleLeft}></div> {/* Empty left space */}
+					<div className={styles.modalTitleCenter}>Add Embeddings from Response</div> {/* Centered title */}
+					<div className={styles.modalTitleRight}>
+					  <button className={styles.closeXButton} onClick={handleBackToChat}>×</button> {/* Close button */}
+					</div>
+				  </div>
+				</div>		
+				{/*
                 <div className="handle" style={{ cursor: 'move', padding: '10px', backgroundColor: '#f0f0f0' }}>
                     <h2>Add Embeddings from Response</h2>
                 </div>
+				*/}
 
                 <div className={styles.modalContent}>
                     {embeddings.length > 0 ? (
                         embeddings.map((embedding, index) => (
                             <div key={index} className={styles.embeddingContainer}>
-                                {/* Delete button */}
-                                <button className={styles.deleteButton} onClick={() => handleDelete(index)}>X</button>
+                              	{/* Delete button for each embedding */}
+								<button
+									className={styles.deleteButton}
+									onClick={() => handleDelete(index)}
+                              	>
+                                  	X
+                              	</button>		
                                 <AddEmbedding
                                     initialQuestion={embedding.question}
                                     initialAnswer={embedding.response}
@@ -52,9 +74,8 @@ const EmbeddingModal = ({ onClose }) => {
                     )}
                 </div>
 
-                <button onClick={onClose} className={styles.closeButton}>Close</button>
+                <button onClick={handleBackToChat} className={styles.closeButton}>Close</button>
             </div>
-        </Draggable>
     );
 };
 

@@ -1,9 +1,10 @@
+/* ChatComponent.model.css*/
 .chatContainer {
     max-width: 600px;
     margin: auto;
     padding: 20px;
     background-color: #111;
-    color: #fff;
+    color: black;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
 }

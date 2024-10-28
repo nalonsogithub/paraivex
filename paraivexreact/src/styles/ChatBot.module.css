@@ -1,3 +1,4 @@
+/*ChatBot.model.css*/
 /* Main container for the chatbot */
 .AigentContainer {
   display: flex;
@@ -16,7 +17,7 @@
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   max-width: 600px;
   width: 100%;
-  height: 100%; /* Let the container fully fill the AigentContainer */
+  height: 100%; 
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -26,10 +27,9 @@
 .AigentchatLog {
   flex-grow: 1;
   padding: 20px;
-  overflow-y: auto; /* Enables scrolling within the chat log */
+  overflow-y: auto; 
   text-align: center;
-  color: #333333;
-  font-size: 1em;
+  font-size: 14px;
 }
 
 /* Message container styling */
@@ -47,7 +47,7 @@
   align-items: center;
   padding: 10px;
   border-top: 1px solid #eee;
-  background-color: #f9f9f9; /* Slightly different background to separate from chat log */
+  background-color: #f9f9f9; 
 }
 
 /* Input field styling */
@@ -78,6 +78,8 @@
 .AigentsubmitButton:hover, .AigentcancelButton:hover {
   background-color: #0056b3;
 }
+
+
 .followupContainer {
     margin-bottom: 8px;
     text-align: center;
