@@ -1,0 +1,29 @@
+/* src/styles/Navbar.module.css */
+
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    background-color: #222;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+    border-bottom: 1px solid #333;
+}
+
+.navButton {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 10px 20px;
+    background-color: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.navButton:hover {
+    background-color: #fff;
+    color: #000;
+}
