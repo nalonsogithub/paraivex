@@ -4,8 +4,13 @@ import { useAuth } from '../contexts/AuthContext';
 import styles from '../styles/ChatComponent.module.css';
 import Navbar from './Navbar';
 import ChatBot from './ChatBot';
+<<<<<<< HEAD
 //import EmbeddingModal from './EmbeddingModal';
 import { useNavigate } from 'react-router-dom';
+=======
+import EmbeddingModal from './EmbeddingModal';
+
+>>>>>>> 459daa780fb2c9c66b93a49dbba649027f0b55cd
 
 const ChatComponent = () => {
     const [userPrompt, setUserPrompt] = useState("");
@@ -22,9 +27,13 @@ const ChatComponent = () => {
 	const [maxResults, setMaxResults] = useState(3);
 	const [jsonDetected, setJsonDetected] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+<<<<<<< HEAD
 	const navigate = useNavigate();
 	
 	
+=======
+
+>>>>>>> 459daa780fb2c9c66b93a49dbba649027f0b55cd
 	// Update originalResults when data arrives from the backend
 	useEffect(() => {
 		// Assuming similaritySearchResults is the response data from Flask
@@ -37,10 +46,14 @@ const ChatComponent = () => {
       setJsonDetected(detected);
     };
 	
+<<<<<<< HEAD
     const handleEmbeddingClick = () => {
         navigate('/embedding-modal');
     };
 	
+=======
+
+>>>>>>> 459daa780fb2c9c66b93a49dbba649027f0b55cd
 	// Filtering function
 	const filterResults = () => {
 //		console.log("Filtering with maxResults:", maxResults, "and cosineSimilarityThreshold:", cosineSimilarityThreshold);
@@ -148,13 +161,21 @@ const enhanceUserPrompt = (userPrompt, similarResponses) => {
 			<div className={styles.title}>
 			  <h2>Chat with Similarity Search</h2>
 				{/* Render modal when open */}
+<<<<<<< HEAD
 				{/* isModalOpen && <EmbeddingModal onClose={() => setIsModalOpen(false)} />*/ }
+=======
+				{isModalOpen && <EmbeddingModal onClose={() => setIsModalOpen(false)} />}
+>>>>>>> 459daa780fb2c9c66b93a49dbba649027f0b55cd
 			</div>
 			<div className={styles.jsonButtonContainer}>
 			  {jsonDetected && (
 				<button 
 				  className={styles.jsonButton} 
+<<<<<<< HEAD
 				  onClick={() => handleEmbeddingClick()}
+=======
+				  onClick={() => setIsModalOpen(true)}
+>>>>>>> 459daa780fb2c9c66b93a49dbba649027f0b55cd
 				>
 				  ⚙️ {/* You can replace this with any symbol, such as 🛠️ or 📜 */}
 				</button>

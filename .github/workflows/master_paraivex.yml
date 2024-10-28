@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
@@ -63,6 +64,8 @@ jobs:
         run: unzip release.zip
 
 =======
+=======
+>>>>>>> 459daa780fb2c9c66b93a49dbba649027f0b55cd
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
@@ -126,7 +129,10 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
+<<<<<<< HEAD
 >>>>>>> 459daa7 (Initial commit after reinitializing Git)
+=======
+>>>>>>> 459daa780fb2c9c66b93a49dbba649027f0b55cd
       
       - name: Login to Azure
         uses: azure/login@v2
@@ -134,6 +140,7 @@ jobs:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_04E82768CEF342F698231FC317FA60BE }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8ACB20B4D7EF4A8599F4D07FB8A99F94 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_E79C68A69F564C3DB2BDBF3E86C840B7 }}
+<<<<<<< HEAD
 <<<<<<< HEAD
 
       - name: 'Deploy to Azure Web App'
@@ -143,6 +150,8 @@ jobs:
           app-name: 'ParAIveX'
           slot-name: 'Production'
 =======
+=======
+>>>>>>> 459daa780fb2c9c66b93a49dbba649027f0b55cd
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
@@ -150,5 +159,8 @@ jobs:
         with:
           app-name: 'ParAIveX'
           slot-name: 'Production'
+<<<<<<< HEAD
 >>>>>>> 459daa7 (Initial commit after reinitializing Git)
+=======
+>>>>>>> 459daa780fb2c9c66b93a49dbba649027f0b55cd
           
