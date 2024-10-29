@@ -29,7 +29,8 @@
   padding: 20px;
   overflow-y: auto; 
   text-align: center;
-  font-size: 14px;
+  font-size: 0.85em;
+/*  font-size: 14px;*/
 }
 
 /* Message container styling */
@@ -38,7 +39,7 @@
   padding: 10px;
   border-radius: 8px;
   text-align: left; /* Left-aligns text within each message */
-  font-size: 1em;
+  font-size: 0.85em;
 }
 
 /* Input form styling */
@@ -54,7 +55,7 @@
 .AigentinputField {
   flex: 1;
   padding: 8px;
-  font-size: 16px;
+  font-size: 0.85em;
   border: 1px solid #ddd;
   border-radius: 5px;
   margin-right: 10px;
@@ -66,7 +67,7 @@
   border: none;
   background-color: #007bff;
   color: white;
-  font-size: 16px;
+  font-size: 0.85em;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -89,7 +90,7 @@
     background-color: #007bff;
     color: white;
     padding: 5px 10px;
-    font-size: 0.9em;
+    font-size: 0.85em;
     border: none;
     border-radius: 4px;
     cursor: pointer;

@@ -4,7 +4,7 @@
     margin: auto;
     padding: 20px;
     background-color: #111;
-    color: black;
+    color: #888888;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
 }
@@ -12,6 +12,7 @@
 h2, h3 {
     text-align: center;
     color: #e0e0e0;
+	font-size: 1.2em;
 }
 
 .inputContainer, .configurationSection {
@@ -21,6 +22,7 @@ h2, h3 {
 label {
     font-weight: bold;
     color: #ddd;
+	font-size: 0.85em;
 }
 
 textarea, input[type="text"], input[type="number"] {
@@ -31,6 +33,7 @@ textarea, input[type="text"], input[type="number"] {
     border-radius: 4px;
     background-color: #333;
     color: #fff;
+	font-size: 0.85em;
 }
 .SubmitButtonContainer {
     display: flex;
@@ -46,7 +49,7 @@ textarea, input[type="text"], input[type="number"] {
     color: #fff;
     border: none;
     border-radius: 4px;
-    font-size: 16px;
+	font-size: 0.85em;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -68,6 +71,7 @@ textarea, input[type="text"], input[type="number"] {
     padding: 10px;
     background-color: #333;
     border-radius: 4px;
+	font-size: 0.85em;
 }
 
 .enhanceButton {
@@ -76,6 +80,7 @@ textarea, input[type="text"], input[type="number"] {
     border: none;
     padding: 8px 12px;
     margin-top: 5px;
+	font-size: 0.85em;
     cursor: pointer;
     border-radius: 4px;
 }
@@ -93,9 +98,7 @@ textarea, input[type="text"], input[type="number"] {
 .enhancedPrompt {
     width: 95%;
     min-height: 50px; /* Starting height */
-    font-size: 14px;  /* Smaller font size */
-/*    resize: none;    */
-/*    overflow: hidden; */
+	font-size: 0.85em;
     color: #111;
     padding: 10px;
     border-radius: 4px;
@@ -117,6 +120,7 @@ textarea, input[type="text"], input[type="number"] {
     color: #fff;
     border: none;
     border-radius: 4px;
+	font-size: 0.85em;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -147,7 +151,7 @@ textarea, input[type="text"], input[type="number"] {
 .title h2 {
   text-align: center;
   margin: 0;
-  font-size: 1.5em;
+  font-size: 1.2em;
 }
 
 .jsonButton {

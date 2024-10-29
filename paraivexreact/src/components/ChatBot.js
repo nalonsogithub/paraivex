@@ -17,7 +17,7 @@ const ChatBot = ({ prompt, setPrompt, onJsonDetected  }) => {
   const [userInput, setUserInput] = useState("");
   const [visibleQuestionCount, setVisibleQuestionCount] = useState(3);	
   const baseURL = getBaseURL();
-  const { setResponseEmbeddings } = useAuth();
+  const { setResponseEmbeddings, chatHistory, updateChatHistory } = useAuth();
   const [followup, setFollowup] = useState('');
 	
 	
@@ -186,7 +186,13 @@ const handleSubmit = async (event, promptOverride = null) => {
     const input = currentPrompt;
     const question = currentPrompt;
 	
+    // Prepare initial buffer with chat history for streaming
+//	bufferRef.current = chatHistory.map(msg => `${msg.user}: ${msg.text}`).join("\n") + `\nUser: ${currentPrompt}\n`;
+	
+	
 	// CLEAR PROMPT
+    const newMessage = { user: 'User', text: question };
+    updateChatHistory(newMessage);
 	setPrompt("");
 	setFollowup('');
 	
@@ -281,6 +287,11 @@ const handleSubmit = async (event, promptOverride = null) => {
 				  onJsonDetected(true);
 			  }
 				
+			  // UPDATE RESPONSE
+			  const aiResponse = { user: 'AIgent', text: result.textContent };
+			  updateChatHistory(aiResponse);
+				
+				
 			  // LEAVE THE BUFFER FULL FOR CLEARITY
 //			  cleanedBuffer = result.textContent;
 			  cleanedBuffer = cleanedBuffer;
@@ -337,7 +348,6 @@ const handleSubmit = async (event, promptOverride = null) => {
         console.error("Error fetching data: ", error);
         setMessages(prevMessages => [...prevMessages, { user: "AIgent", text: "Failed to connect to the server." }]);
       }
-
       setIsLoading(false);
     }
   };
@@ -410,33 +420,36 @@ const handleSubmit = async (event, promptOverride = null) => {
       <div 
         className={`${styles.AigentchatbotContainer}`} 
       >	  
-	  
-        <div 
-          className={`${styles.AigentchatLog}`} 
-          ref={chatLogRef}
-        >	  
-          {messages.map((message, index) => (
-            <div key={index} className={styles.AigentmessageContainer}>
-              {/* Only display the user label if showLabels is true */}
-              {showLabels && (
-                <strong>{message.user}:</strong>
-              )}
 
-              {/* Conditionally render the message text: 
-                  Show the text unless showLabels is false and message.user is "User" */}
-              {!(showLabels === false && message.user === "User") && (
-                <ReactMarkdown>{message.text}</ReactMarkdown>
-              )}
-            </div>
-          ))}
-          {/* Scroll Button */}
-          <div className={styles.AigentscrollButtonContainer}>
-            <button onClick={handleScrollToBottom} className={styles.AigentscrollButton} style={{ display: showScrollButton ? 'block' : 'none' }}>
-              v
-            </button>
-          </div>
+			{/* Display chat history */}
+			<div 
+			  className={`${styles.AigentchatLog}`} 
+			  ref={chatLogRef}
+			>	  
+			  {messages.map((message, index) => (
+				<div key={index} className={styles.AigentmessageContainer}>
+				  {/* Only display the user label if showLabels is true */}
+				  {showLabels && (
+					<strong>{message.user}:</strong>
+				  )}
 
-        </div>
+				  {/* Conditionally render the message text: 
+					  Show the text unless showLabels is false and message.user is "User" */}
+				  {!(showLabels === false && message.user === "User") && (
+					<ReactMarkdown>{message.text}</ReactMarkdown>
+				  )}
+				</div>
+			  ))}
+
+
+			  {/* Scroll Button */}
+			  <div className={styles.AigentscrollButtonContainer}>
+				<button onClick={handleScrollToBottom} className={styles.AigentscrollButton} style={{ display: showScrollButton ? 'block' : 'none' }}>
+				  v
+				</button>
+			  </div>
+
+			</div>
 
                 {/* Follow-up Button */}
                 {followup && (

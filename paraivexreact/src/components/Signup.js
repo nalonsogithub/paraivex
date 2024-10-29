@@ -16,13 +16,6 @@ const Signup = ({ navigateToLogin }) => {
     const navigate = useNavigate();
     const ndaRef = useRef(null);
 
-    // Dictionary of valid security fragments
-    const securityFragments = {
-        "xman": "Nick",
-        "secureB": "Jane Smith",
-        "secureC": "Alice Johnson",
-    };
-
     // NDA Text content
     const NDA_TEXT = `
 ### Non-Disclosure Agreement (NDA)
@@ -48,15 +41,63 @@ This agreement is governed by the laws of the Commonwealth of Massachusetts.
 
 Click "I Agree" after reading to proceed.`;
 
+    // Validation states
+    const [usernameError, setUsernameError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+	const [securityFragmentError, setSecurityFragmentError] = useState('');
+
+    // Validation rules
+    const validateUsername = (value) => {
+        if (value.length < 3) {
+            setUsernameError('Username must be at least 3 characters long.');
+        } else if (!/^[a-zA-Z0-9]+$/.test(value)) {
+            setUsernameError('Username should only contain letters and numbers.');
+        } else {
+            setUsernameError('');
+        }
+    };
+
+    const validatePassword = (value) => {
+        if (value.length < 8) {
+            setPasswordError('Password must be at least 8 characters long.');
+        } else if (!/(?=.*[a-zA-Z])(?=.*[0-9])/.test(value)) {
+            setPasswordError('Password must contain at least one letter and one number.');
+        } else {
+            setPasswordError('');
+        }
+    };
 	
-    // Validate security fragment and navigate based on result
-    const handleFragmentValidation = (e) => {
-		// Check if securityFragment exists in the securityFragments dictionary
-		if (securityFragments[securityFragment]) {
-			setView('nda'); // Move to NDA view if fragment is valid
+	
+	const validateSecurityFragment = (value) => {
+		if (value && Object.values(securityFragments).includes(value)) {
+			setSecurityFragmentError('');  // Clear the error if the fragment is valid
 		} else {
-			navigate('/under-construction'); // Redirect to under-construction page if invalid
+			setSecurityFragmentError('Invalid security fragment. Keep Trying.');
 		}
+	};	
+	
+    const handleFragmentValidation = (e) => {
+        e.preventDefault();
+
+        // Trigger validations
+        validateUsername(username);
+        validatePassword(password);
+
+        // Check if fields are valid
+        if (!usernameError && !passwordError) {
+            if (securityFragments[securityFragment]) {
+                setView('nda'); // Move to NDA view if fragment is valid
+            } else {
+                navigate('/under-construction'); // Redirect if invalid
+            }
+        }
+    };
+
+	
+    // Dictionary of valid security fragments
+    const securityFragments = {
+        "Cs": "192631770",
+        "Pi": "14159265358",
     };
 	
     const handleNDAAgreement = (agree) => {
@@ -127,23 +168,45 @@ Click "I Agree" after reading to proceed.`;
                                 type="text"
                                 placeholder="Username"
                                 value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                onChange={(e) => {
+                                    setUsername(e.target.value);
+                                    validateUsername(e.target.value);
+                                }}		
                                 className={styles.input}
                             />
+                            {usernameError && <p className={styles.error}>{usernameError}</p>}
+                            <small className={`${styles.helperText} ${usernameError ? styles.errorText : ''}`}>
+                            </small>
                             <input
                                 type="password"
                                 placeholder="Password"
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                    validatePassword(e.target.value);
+                                }}
                                 className={styles.input}
                             />
+
+                            {passwordError && <p className={styles.error}>{passwordError}</p>}
+                            <small className={`${styles.helperText} ${passwordError ? styles.errorText : ''}`}>
+                            </small>
+
+									
                             <input
                                 type="text"
                                 placeholder="Security Fragment"
                                 value={securityFragment}
-                                onChange={(e) => setSecurityFragment(e.target.value)}
+                                onChange={(e) => {
+                                    setSecurityFragment(e.target.value);
+                                    validateSecurityFragment(e.target.value);
+                                }}
                                 className={styles.input}
                             />
+                            {securityFragmentError && <p className={styles.error}>{securityFragmentError}</p>}
+                            <small className={`${styles.helperText} ${securityFragmentError ? styles.errorText : ''}`}>
+                            </small>
+
                             <button type="submit" className={styles.button}>Next</button>
                         </form>
                         <button onClick={navigateToLogin} className={styles.loginLink}>Back to Login</button>

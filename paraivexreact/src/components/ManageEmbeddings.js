@@ -122,17 +122,52 @@ const ManageEmbeddings = () => {
         <div className={styles.container}>
 			<Navbar />
 
-            <h2>Your Embeddings</h2>
-            <div className={styles.embeddingList}>
-                {embeddings.map((embedding) => (
-                    <div key={embedding.id} className={styles.embeddingItem}>
-                        <p><strong>Question:</strong> {embedding.question}</p>
-                        <p><strong>Tags:</strong> {embedding.tags.join(', ')}</p>
-                        <button onClick={() => handleEditTags(embedding)} className={styles.editButton}>Edit Tags</button>
-                        <button onClick={() => handleDelete(embedding.id)} className={styles.deleteButton}>Delete</button>
-                    </div>
-                ))}
-            </div>
+			<h2>Your Embeddings</h2>
+			<div className={styles.embeddingList}>
+				{embeddings.map((embedding, index) => (
+					<div key={embedding.id} className={styles.embeddingItem}>
+						{/* Title Bar */}
+						<div className={styles.titleBar}>
+							<div className={styles.titleLeft}>
+								<span>{index + 1}</span> {/* Sequential number */}
+							</div>
+							<div className={styles.titleCenter}>
+								<span>Created At: {new Date(embedding.created_at).toLocaleDateString()} | Last Updated: {new Date(embedding.last_updated).toLocaleDateString()}</span>
+							</div>
+							<div className={styles.titleRight}></div> {/* Empty for spacing */}
+						</div>
+
+						{/* Question Box */}
+						<div className={styles.questionBox}>
+							<label><strong>Question:</strong></label>
+							<textarea
+								value={embedding.question}
+								readOnly
+								rows={3}
+								className={styles.questionText}
+							/>
+						</div>
+
+						{/* Tags */}
+						<div className={styles.tagBox}>
+							<label><strong>Tags:</strong></label>
+							<p className={styles.tags}>{embedding.tags.join(', ')}</p>
+						</div>
+
+						{/* Buttons */}
+						<div className={styles.buttonBox}>
+							<button onClick={() => handleEditTags(embedding)} className={styles.editButton}>
+								Edit Tags
+							</button>
+							<button onClick={() => handleDelete(embedding.id)} className={styles.deleteButton}>
+								Delete
+							</button>
+						</div>
+					</div>
+				))}
+			</div>
+
+
 
 			{showEditModal && (
 				<div className={styles.modalOverlay}>

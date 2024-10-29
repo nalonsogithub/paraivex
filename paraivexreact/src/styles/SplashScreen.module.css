@@ -15,28 +15,28 @@
 
 .splashContent {
     background: #ffffff;
-    color: #333; /* Black color for the text */
+    color: #333;
     width: 80%;
     max-width: 500px;
-    max-height: 80vh;
+    height: 80vh; /* Fixed height */
     padding: 20px;
     border-radius: 8px;
-    overflow-y: auto;
+    overflow-y: auto; /* Enable scrolling if content overflows */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     cursor: default;
-    font-size: 0.9rem; /* Smaller font size for readability */
+    font-size: 0.9rem;
+    text-align: left;
 }
 
 .typingText {
-    white-space: pre-line; /* Preserves line breaks in the text */
+    white-space: pre-line;
     font-family: Arial, sans-serif;
     line-height: 1.5;
 }
 
 .splashContent h1,
 .splashContent h2 {
-    color: #000; /* Black color for the title */
-    text-align: center;
+    color: #000;
 }
 
 

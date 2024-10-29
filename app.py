@@ -38,7 +38,7 @@ def initialize_session_variables():
     # print('INITIALIZING SESSION VARIABLES')
     session.modified = True
     session['CHAT_ID'] = None
-    session['OAITHREAD'] = None
+    session['OAI_THREAD_ID'] = None
     return 0
 
 def retrieve_session_variable(variable_name):

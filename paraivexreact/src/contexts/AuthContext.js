@@ -11,6 +11,18 @@ export const AuthProvider = ({ children }) => {
 	const [similaritySearchResults, setSimilaritySearchResults] = useState([]);
     const baseURL = getBaseURL();
 	const [responseEmbeddings, setResponseEmbeddings] = useState([]);
+    const [chatHistory, setChatHistory] = useState([]);
+
+    // Function to add a new message to chat history
+    const updateChatHistory = (newMessage) => {
+        setChatHistory((prevHistory) => [...prevHistory, newMessage]);
+    };
+
+    // Optional: Function to clear the chat history
+    const clearChatHistory = () => {
+        setChatHistory([]);
+    };
+	
 	
     // Function to fetch user documents from the backend
 	const fetchUserDocuments = async () => {
@@ -318,7 +330,10 @@ export const AuthProvider = ({ children }) => {
 				similaritySearchResults, 
                 responseEmbeddings, 
                 setResponseEmbeddings,
-				signup
+				signup, 
+				chatHistory, 
+				updateChatHistory, 
+				clearChatHistory
 
             }}
         >
