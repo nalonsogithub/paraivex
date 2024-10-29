@@ -1,17 +1,10 @@
-<<<<<<< HEAD
 /* ChatComponent.model.css*/
-=======
->>>>>>> 459daa780fb2c9c66b93a49dbba649027f0b55cd
 .chatContainer {
     max-width: 600px;
     margin: auto;
     padding: 20px;
     background-color: #111;
-<<<<<<< HEAD
     color: black;
-=======
-    color: #fff;
->>>>>>> 459daa780fb2c9c66b93a49dbba649027f0b55cd
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
 }
