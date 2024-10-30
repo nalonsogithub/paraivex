@@ -17,8 +17,7 @@ const ChatBot = ({ prompt, setPrompt, onJsonDetected  }) => {
   const [userInput, setUserInput] = useState("");
   const [visibleQuestionCount, setVisibleQuestionCount] = useState(3);	
   const baseURL = getBaseURL();
-  const { setResponseEmbeddings, chatHistory, updateChatHistory } = useAuth();
-  const [followup, setFollowup] = useState('');
+  const { setResponseEmbeddings, chatHistory, updateChatHistory,  followup, setFollowup} = useAuth();
 	
 	
   const showLabels = true;

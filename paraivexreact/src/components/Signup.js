@@ -218,14 +218,13 @@ Click "I Agree" after reading to proceed.`;
                 {view === 'nda' && (
                     <>
                         <h2 className={styles.title}>Non-Disclosure Agreement</h2>
-                        <p>Hi, {securityFragments[securityFragment]}! Please read the NDA below.</p>
+                        <p>Please read the NDA below.</p>
                         <div className={styles.ndaContainer} ref={ndaRef} onScroll={handleScroll}>
                             <ReactMarkdown>{NDA_TEXT}</ReactMarkdown>
                         </div>
                         <button
                             onClick={() => handleNDAAgreement(true)}
                             className={styles.NDAIAgreebutton}
-                            disabled={!hasScrolledToEnd}
                         >
                             I Agree
                         </button>

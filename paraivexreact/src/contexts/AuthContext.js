@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
 	const [responseEmbeddings, setResponseEmbeddings] = useState([]);
     const [chatHistory, setChatHistory] = useState([]);
 	const [tags, setTags] = useState([]);
-
+	const [followup, setFollowup] = useState('');
     // Function to add a new message to chat history
     const updateChatHistory = (newMessage) => {
         setChatHistory((prevHistory) => [...prevHistory, newMessage]);
@@ -367,7 +367,9 @@ export const AuthProvider = ({ children }) => {
 				clearChatHistory,
 				getUserTags,
 			    tags,
-				logout
+				logout,
+				followup, 
+				setFollowup
 
             }}
         >
