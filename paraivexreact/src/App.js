@@ -11,6 +11,7 @@ import UnderConstruction from './components/UnderConstruction';
 import ChatComponent from './components/ChatComponent';
 import EmbeddingModal from './components/EmbeddingModal';
 import SplashScreen from './components/SplashScreen';
+import StageEmbeddings from './components/StageEmbeddings';
 import './App.css';
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
                             <Route path="/manage-embeddings" element={<ManageEmbeddings />} />
                             <Route path="/under-construction" element={<UnderConstruction />} />
                             <Route path="/chat-component" element={<ChatComponent />} />
+                            <Route path="/stage-embeddings" element={<StageEmbeddings />} />
                             <Route path="/embedding-modal" element={<EmbeddingModal />} />
                         </Routes>
                     )}		

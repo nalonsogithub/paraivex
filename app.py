@@ -4,7 +4,7 @@ from flask_cors import CORS
 from utils.cosmos_queries import get_user_by_username, add_user, save_user_documents, get_user_documents, delete_user_documents
 from utils.openai_client import create_embedding
 from utils.auth_utils import hash_password, verify_password
-from utils.ai_search import upload_document, delete_document, search_by_embedding, get_documents_by_username
+from utils.ai_search import upload_document, delete_document, search_by_embedding, get_documents_by_username, get_documents_by_username_and_tags, get_tags_by_username
 from openai import OpenAI, AssistantEventHandler
 import os
 import json
@@ -237,20 +237,44 @@ def delete_embedding():
         return jsonify({"success": False, "message": "Failed to delete embedding"}), 500
 
 
-@app.route('/api/get_user_embeddings', methods=['GET'])
-def get_user_embeddings():
+@app.route('/api/get_user_tags', methods=['GET'])
+def get_user_tags():
     username = request.args.get("username")
 
     if not username:
         return jsonify({"success": False, "message": "Username is required"}), 400
 
     try:
-        documents = get_documents_by_username(username)
+        tags = get_tags_by_username(username)
         # print('DOCUMENTS', documents)
+        return jsonify({"success": True, "tags": tags})
+    except Exception as e:
+        print(f"Error retrieving tags for username '{username}': {e}")
+        return jsonify({"success": False, "message": "Failed to retrieve documents"}), 500
+
+@app.route('/api/get_user_embeddings', methods=['GET'])
+def get_user_embeddings():
+    # Retrieve username and tags from query parameters
+    username = request.args.get("username")
+    tags = request.args.get("tags")  # Expecting comma-separated tags
+
+    # Check if username is provided
+    if not username:
+        return jsonify({"success": False, "message": "Username is required"}), 400
+
+    # Convert tags to a list if provided
+    tag_list = tags.split(",") if tags else None
+
+    try:
+        # Call the updated function with username and optional tags
+        documents = get_documents_by_username_and_tags(username, tags=tag_list)
         return jsonify({"success": True, "documents": documents})
     except Exception as e:
-        print(f"Error retrieving documents for username '{username}': {e}")
+        print(f"Error retrieving documents for username '{username}' with tags '{tags}': {e}")
         return jsonify({"success": False, "message": "Failed to retrieve documents"}), 500
+
+
+
 
 @app.route('/api/update_embedding', methods=['POST'])
 def update_embedding():

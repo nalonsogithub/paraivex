@@ -13,9 +13,10 @@ const Login = ({ navigateToSignup }) => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
+		logout();
         const response = await login(username, password);
         if (response.success) {
-            navigate('/user');  // Redirect to MainUserPage on success
+            navigate('/stage-embeddings');  // Redirect to MainUserPage on success
         } else {
             setError(response.message);
         }

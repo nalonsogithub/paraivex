@@ -10,12 +10,12 @@ import { useNavigate } from 'react-router-dom';
 const ChatComponent = () => {
     const [userPrompt, setUserPrompt] = useState("");
     const [prompt, setPrompt] = useState(""); // Centralized prompt state	
-    const [tags, setTags] = useState([]);  // Allow the user to select tags
+//    const [tags, setTags] = useState([]);  
     const [topK, setTopK] = useState(3);
 	const [selectedTags, setSelectedTags] = useState([]);
 	const [allTags, setAllTags] = useState([]);
 	const [enhancedPrompt, setEnhancedPrompt] = useState("");
-	const { brains, performSimilaritySearch, similaritySearchResults, setResponseEmbeddings  } = useAuth();
+	const { brains, performSimilaritySearch, similaritySearchResults, setResponseEmbeddings, tags, getUserTags  } = useAuth();
 	const [cosineSimilarityThreshold, setCosineSimilarityThreshold] = useState(0.7);
 	const [originalResults, setOriginalResults] = useState([]);
 	const [displayedResults, setDisplayedResults] = useState([]);
@@ -24,6 +24,13 @@ const ChatComponent = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const navigate = useNavigate();
 	
+    // Fetch tags on mount if they haven't been loaded
+    useEffect(() => {
+        if (!tags.length) {
+            getUserTags();
+        }
+		setAllTags(tags);
+    }, [tags, getUserTags]);	
 	
 	// Update originalResults when data arrives from the backend
 	useEffect(() => {
@@ -76,17 +83,6 @@ const ChatComponent = () => {
 	}, [similaritySearchResults]);
 	
 	
-	useEffect(() => {
-		brains.forEach((brain, index) => {
-//			console.log(`Brain ${index}:`, brain);
-		});
-
-		const tags = brains.flatMap(brain => brain.tags || []);
-
-		const uniqueTags = [...new Set(tags)];
-
-		setAllTags(uniqueTags);
-	}, [brains]);
 	
 
 const enhanceUserPrompt = (userPrompt, similarResponses) => {
@@ -109,10 +105,6 @@ const enhanceUserPrompt = (userPrompt, similarResponses) => {
 	
     // Function to handle user prompt submission
     const handleSearch = async () => {
-		if (selectedTags.length === 0) {
-			alert("Please select at least one tag before searching.");
-			return;
-		}		
         await performSimilaritySearch(userPrompt, selectedTags, topK, cosineSimilarityThreshold);
     };
 	
@@ -173,25 +165,26 @@ const enhanceUserPrompt = (userPrompt, similarResponses) => {
                     placeholder="Type your question here..."
                 />
 						
-				{/* Tag Selection */}
-				<div className={styles.tagSection}>
-					<h3>Select Tags</h3>
-					<button onClick={selectAllTags} className={styles.selectButton}>Select All</button>
-					<button onClick={clearAllTags} className={styles.clearButton}>Clear All</button>
-					<div className={styles.tagOptions}>
-						{allTags.map(tag => (
-							<label key={tag} className={styles.tagLabel}>
-								<input
-									type="checkbox"
-									checked={selectedTags.includes(tag)}
-									onChange={() => handleTagToggle(tag)}
-								/>
-								{tag}
-							</label>
-						))}
-					</div>
-				</div>						
-						
+                {/* Tag Selection */}
+                <div className={styles.tagSection}>
+                    <h3>Select Tags</h3>
+                    <button onClick={selectAllTags} className={styles.selectButton}>Select All</button>
+                    <button onClick={clearAllTags} className={styles.clearButton}>Clear All</button>
+                    <div className={styles.tagOptions}>
+                        {tags.map(tag => (
+                            <label key={tag} className={styles.tagLabel}>
+                                <input
+                                    type="checkbox"
+                                    checked={selectedTags.includes(tag)}
+                                    onChange={() => handleTagToggle(tag)}
+                                />
+                                {tag}
+                            </label>
+                        ))}
+                    </div>
+                </div>						
+
+
                 <label htmlFor="topK">Top K Results:</label>
                 <input
                     type="number"

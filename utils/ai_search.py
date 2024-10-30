@@ -114,3 +114,69 @@ def search_by_embedding(embedding_vector, tag_filters=None, top_k=5, similarity_
             })
 
     return output_results
+
+
+def get_tags_by_username(username):
+    """Get all unique tags associated with a specific username."""
+    try:
+        # Define the filter to search by username
+        filter_expression = f"username eq '{username}'"
+
+        # Use facets to get distinct tags for the username
+        facet_results = search_client.search(
+            search_text="",
+            filter=filter_expression,
+            facets=["tags"],  # Facet on tags
+            top=0  # We don't need document details, so set top to 0
+        )
+
+        # Extract and print tag values from facet results
+        tags = [facet['value'] for facet in facet_results.get_facets()['tags']]
+        # print(f"Found tags for username '{username}':", tags)
+
+        return tags
+
+    except Exception as e:
+        print(f"Error retrieving tags for username '{username}': {e}")
+        return []
+
+
+def get_documents_by_username_and_tags(username, tags=None):
+    """
+    Query documents in Azure Search that match the specified username and optionally filter by tags.
+
+    Parameters:
+        username (str): The username to filter documents by (required).
+        tags (list, optional): A list of tags to filter documents by.
+
+    Returns:
+        list: A list of documents that contain the specified username and, if provided, match any of the specified tags.
+    """
+    try:
+        # Start filter expression with username
+        filter_expression = f"username eq '{username}'"
+
+        # Add tags to filter if provided
+        if tags:
+            tag_filters = " or ".join([f"tags/any(t: t eq '{tag}')" for tag in tags])
+            filter_expression += f" and ({tag_filters})"
+
+        # Define the fields to retrieve
+        selected_fields = ["id", "question", "answer", "tags", "created_at", "last_updated", "embedding_vector", "username"]
+
+        # Query the documents with specific fields
+        results = search_client.search(
+            search_text="",
+            filter=filter_expression,
+            select=selected_fields
+        )
+
+        # Collect and return the results
+        documents = [doc for doc in results]
+        print(f"Found {len(documents)} documents for username '{username}' with tags {tags}.")
+
+        return documents
+
+    except Exception as e:
+        print(f"Error querying documents for username '{username}' with tags {tags}: {e}")
+        return []

@@ -386,3 +386,10 @@ h3 {
     background-color: #c82333;
 }
 
+.tagsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+    justify-items: start; /* Left-align items in each grid cell */
+}

@@ -23,7 +23,7 @@ Click anywhere outside of this box to continue.
     `;
 
     const [displayedText, setDisplayedText] = useState('');
-    const typingSpeed = 15; // Adjust typing speed here
+    const typingSpeed = 5; // Adjust typing speed here
 
     useEffect(() => {
         let index = 0;

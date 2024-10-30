@@ -412,6 +412,10 @@ const handleSubmit = async (event, promptOverride = null) => {
     }
   };
 
+    useEffect(() => {
+        setMessages(chatHistory);
+    }, [chatHistory]);
+	
   return (
     <div 
       className={`${styles.AigentContainer}`} 

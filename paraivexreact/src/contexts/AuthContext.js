@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
     const baseURL = getBaseURL();
 	const [responseEmbeddings, setResponseEmbeddings] = useState([]);
     const [chatHistory, setChatHistory] = useState([]);
+	const [tags, setTags] = useState([]);
 
     // Function to add a new message to chat history
     const updateChatHistory = (newMessage) => {
@@ -45,10 +46,34 @@ export const AuthProvider = ({ children }) => {
 		}
 	};
 
-	const getEmbeddings = async (username) => {
+    const getUserTags = async (username) => {
+        try {
+            const response = await fetch(`${baseURL}/api/get_user_tags?username=${username}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                setTags(data.tags);  // Update the context with retrieved tags
+                return data.tags;
+            } else {
+                console.error("Failed to retrieve tags:", data.message);
+                return [];
+            }
+        } catch (error) {
+            console.error("Error retrieving tags:", error);
+            return [];
+        }
+    };
+	const getEmbeddings = async (username, tags = []) => {
 //		console.log("Calling getEmbeddings for username:", username);  // Debug log
 		try {
-			const response = await fetch(`${baseURL}/api/get_user_embeddings?username=${username}`, {
+			const tagsQuery = tags.length > 0 ? `&tags=${tags.join(",")}` : "";
+			const response = await fetch(`${baseURL}/api/get_user_embeddings?username=${username}${tagsQuery}`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -303,8 +328,14 @@ export const AuthProvider = ({ children }) => {
 		}
 	};
 	const logout = () => {
-			// Optionally, make a request to Flask to handle server-side session management
-			setAuth(null);
+		// Optionally, make a request to Flask to handle server-side session management if needed
+		setAuth(null);                // Clear authentication state
+		setBrains([]);                // Reset brains data
+		setConfigurations([]);        // Reset configurations data
+		setSimilaritySearchResults([]); // Clear similarity search results
+		setResponseEmbeddings([]);     // Clear response embeddings
+		setChatHistory([]);            // Clear chat history
+		setTags([]);                   // Clear tags
 	};
 
     return (
@@ -333,7 +364,10 @@ export const AuthProvider = ({ children }) => {
 				signup, 
 				chatHistory, 
 				updateChatHistory, 
-				clearChatHistory
+				clearChatHistory,
+				getUserTags,
+			    tags,
+				logout
 
             }}
         >

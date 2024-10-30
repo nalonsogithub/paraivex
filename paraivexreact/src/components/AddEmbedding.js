@@ -4,79 +4,64 @@ import { useAuth } from '../contexts/AuthContext';
 import styles from '../styles/AddEmbedding.module.css';
 import Navbar from './Navbar';
 
-const AddEmbedding = ({ initialQuestion = '', initialAnswer = '', showNavbar = true, onSaveSuccess }) => {
+const AddEmbedding = ({ initialQuestion = '', initialAnswer = '', showNavbar = true, onSaveSuccess, onUpdateTags  = null}) => {
 
-    const { brains, submitEmbedding, fetchUserDocuments } = useAuth();  // Access brains from AuthContext for multi-select
-
-    // Debugging: Check the brains array
-//    console.log("Brains array from AuthContext:", brains);
-
+    const { brains, submitEmbedding, fetchUserDocuments, tags, getUserTags } = useAuth();  // Access brains from AuthContext for multi-select
     const [question, setQuestion] = useState(initialQuestion);
     const [answer, setAnswer] = useState(initialAnswer);
-    const [selectedBrains, setSelectedBrains] = useState([]);  // Multi-select for brains
+	const [selectedTags, setSelectedTags] = useState([]);
     const [customTags, setCustomTags] = useState([]);
     const [newTag, setNewTag] = useState('');  // For entering a new custom tag
 	const [loading, setLoading] = useState(true); // Loading state for documents
+	const [confirmationMessage, setConfirmationMessage] = useState('');
 
-    useEffect(() => {
-        // Fetch user documents (brains) if not already loaded
-        if (!brains || brains.length === 0) {
-            console.log('Fetching brains...');
-            fetchUserDocuments().then(() => {
-                setLoading(false); // Stop loading once brains are fetched
-            });
-        } else {
-            setLoading(false); // Stop loading if brains are already available
-        }
-    }, [fetchUserDocuments, brains]);
-	
-    if (loading) {
-        return <p>Loading documents...</p>; // Optional loading message
-    }	
-	
-	
-    // Handle brain selection
-    const toggleBrainSelection = (brainTag) => {
-        setSelectedBrains((prevSelected) => 
-            prevSelected.includes(brainTag)
-                ? prevSelected.filter(tag => tag !== brainTag)
-                : [...prevSelected, brainTag]
+
+    // Handle adding or removing selected tags
+    const toggleTagSelection = (tag) => {
+        setSelectedTags((prevSelected) =>
+            prevSelected.includes(tag)
+                ? prevSelected.filter((t) => t !== tag)
+                : [...prevSelected, tag]
         );
-    };
+    };	
 
-    const handleSelectAllBrains = () => {
-        setSelectedBrains(brains.map(brain => {
-//            console.log("Processing brain for select all:", brain);  // Log each brain
-            return `brain_${brain.brainName.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
-        }));
-    };
-
-    const handleClearBrains = () => {
-        setSelectedBrains([]);
-    };
 
     // Handle adding and removing custom tags
     const addCustomTag = () => {
         const formattedTag = newTag.toLowerCase().replace(/[^a-z0-9]/g, '_');
         if (formattedTag && !customTags.includes(formattedTag)) {
+			const updatedTags = [...customTags, formattedTag];
             setCustomTags([...customTags, formattedTag]);
+			
+            // Conditionally call onUpdateTags if it's provided
+            if (onUpdateTags) {
+                onUpdateTags(updatedTags);
+            }			
+			
             setNewTag('');
         }
     };
 
     const deleteCustomTag = (tag) => {
+		const updatedTags = customTags.filter((t) => t !== tag);
         setCustomTags(customTags.filter((t) => t !== tag));
+		        // Conditionally call onUpdateTags if it's provided
+        if (onUpdateTags) {
+            onUpdateTags(updatedTags);
+        }
     };
 
     // Prepare the final JSON structure for submission
     const prepareEmbeddingData = () => {
-        const tags = [...selectedBrains, ...customTags];
+        const tags = [...selectedTags, ...customTags];
         return {
             question,
             answer,
             tags
         };
     };
+	
+	
 
     const handleSubmit = async () => {
         const embeddingData = prepareEmbeddingData();
@@ -86,12 +71,16 @@ const AddEmbedding = ({ initialQuestion = '', initialAnswer = '', showNavbar = t
         const result = await submitEmbedding(embeddingData);
 
         if (result.success) {
-            alert("Embedding saved successfully!");
+            setConfirmationMessage("Embedding saved successfully!"); 	
+			getUserTags();
+			
+			// Clear the message after 3 seconds
+            setTimeout(() => setConfirmationMessage(''), 3000);
 			
 			// Reset all fields to clear them after success
 			setQuestion('');
 			setAnswer('');
-			setSelectedBrains([]);
+			setSelectedTags([]);
 			setCustomTags([]);
 			setNewTag('');
 			
@@ -129,31 +118,28 @@ const AddEmbedding = ({ initialQuestion = '', initialAnswer = '', showNavbar = t
                 />
             </div>
 
+            {/* Available Tags Section */}
             <div className={styles.field}>
-                <label>Associate with Brains</label>
-                <div className={styles.multiSelect}>
-                    {brains.map((brain, index) => {
-                        // Log each brain object to ensure brainName exists
-//                        console.log("Brain Object:", brain);
-
-                        const brainName = brain?.brainName ? brain.brainName.toLowerCase().replace(/[^a-z0-9]/g, '_') : '';
-                        const brainTag = `brain_${brainName}`;
-
-                        return (
-                            <div key={index} className={styles.brainOption}>
-                                <input
-                                    type="checkbox"
-                                    checked={selectedBrains.includes(brainTag)}
-                                    onChange={() => toggleBrainSelection(brainTag)}
-                                />
-                                <label>{brain.brainName || 'Unnamed Brain'}</label>
-                            </div>
-                        );
-                    })}
+                <label>Available Tags</label>
+                <div className={styles.tagsGrid}>
+                    {tags.map((tag, index) => (
+                        <div key={index} className={styles.tagItem}>
+                            <input
+                                type="checkbox"
+                                checked={selectedTags.includes(tag)}
+                                onChange={() => toggleTagSelection(tag)}
+                                id={`tag-${index}`}
+                                className={styles.checkbox}
+                            />
+                            <label htmlFor={`tag-${index}`} className={styles.tagLabel}>
+                                {tag}
+                            </label>
+                        </div>
+                    ))}
                 </div>
-                <button onClick={handleSelectAllBrains} className={styles.selectButton}>Select All</button>
-                <button onClick={handleClearBrains} className={styles.clearButton}>Clear</button>
             </div>
+
+
 
             <div className={styles.field}>
                 <label>Custom Tags</label>
@@ -178,6 +164,12 @@ const AddEmbedding = ({ initialQuestion = '', initialAnswer = '', showNavbar = t
             </div>
 
             <button onClick={handleSubmit} className={styles.submitButton}>Save Embedding</button>
+            {/* Confirmation Message */}
+            {confirmationMessage && (
+                <div className={styles.confirmationMessage}>
+                    {confirmationMessage}
+                </div>
+            )}
         </div>
     );
 };

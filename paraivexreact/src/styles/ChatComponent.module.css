@@ -165,3 +165,29 @@ textarea, input[type="text"], input[type="number"] {
 .jsonButton:hover {
   color: #007bff; /* Optional: Hover color for button */
 }
+
+/* ChatComponent.module.css */
+.tagSection {
+    margin-top: 20px;
+}
+
+.selectButton,
+.clearButton {
+    margin: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.tagOptions {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Grid layout for tags */
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.tagLabel {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+

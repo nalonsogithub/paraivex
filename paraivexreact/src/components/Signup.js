@@ -82,10 +82,12 @@ Click "I Agree" after reading to proceed.`;
         // Trigger validations
         validateUsername(username);
         validatePassword(password);
+		validateSecurityFragment(securityFragment);
+		console.log('VALIDATING FRAGMETN',securityFragment);
 
-        // Check if fields are valid
-        if (!usernameError && !passwordError) {
-            if (securityFragments[securityFragment]) {
+       // Check if fields are valid and if securityFragment is correct
+       if (!usernameError && !passwordError && !securityFragmentError) {
+           if (Object.values(securityFragments).includes(securityFragment)) {
                 setView('nda'); // Move to NDA view if fragment is valid
             } else {
                 navigate('/under-construction'); // Redirect if invalid

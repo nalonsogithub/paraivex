@@ -113,3 +113,38 @@ h2 {
 .submitButton:hover {
     background-color: #2c3e50;
 }
+
+.tagsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.tagItem {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox {
+    margin-right: 8px;
+}
+
+.tagLabel {
+    font-size: 14px;
+    color: #333;
+}
+
+/* Confirmation Message */
+.confirmationMessage {
+    color: #4CAF50;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+    padding: 8px;
+    background-color: rgba(76, 175, 80, 0.1);
+    border: 1px solid #4CAF50;
+    border-radius: 5px;
+    transition: opacity 0.5s ease;
+}
+
