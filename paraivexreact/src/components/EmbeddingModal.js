@@ -170,7 +170,7 @@ const EmbeddingModal = ({ onClose }) => {
             {responseEmbeddings.ai_tags && (
                 <div className={styles.aiTagsSection}>
                     <h4>AI Generated Tags</h4>
-                    <div className={styles.tagContainer}>
+                    <div className={styles.aiTagContainer}>
                         {responseEmbeddings.ai_tags.map((tag, index) => (
                             <label key={index}>
                                 <input
