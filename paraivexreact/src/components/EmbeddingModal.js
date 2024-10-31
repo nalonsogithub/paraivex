@@ -8,36 +8,88 @@ import { useNavigate } from 'react-router-dom';
 const EmbeddingModal = ({ onClose }) => {
     const { responseEmbeddings = {}, setResponseEmbeddings, submitEmbedding, tags, getUserTags  } = useAuth();
     const [embeddings, setEmbeddings] = useState(Array.isArray(responseEmbeddings.embeddings) ? responseEmbeddings.embeddings : []);
+    const [universalTags, setUniversalTags] = useState([]);
+    const [useAiTags, setUseAiTags] = useState(false);
+    const [isChronological, setIsChronological] = useState(false);	
 	const navigate = useNavigate();
 
+
 	
+    // Format the current date to be displayed in the label
+    const currentDate = new Date().toLocaleDateString();
 	
     useEffect(() => {
-        setEmbeddings(Array.isArray(responseEmbeddings.embeddings) ? responseEmbeddings.embeddings : []);
-
+		if (!embeddings.length && Array.isArray(responseEmbeddings.embeddings)) {
+			setEmbeddings(responseEmbeddings.embeddings);
+		}
         // Fetch tags on load
         if (tags.length === 0) {
             getUserTags();
         }
+		setUniversalTags(tags);
+		
     }, [responseEmbeddings, tags.length, getUserTags]);
 	
-	
+    // Function to update answers to include the date if 'isChronological' is true
+    const applyChronologicalToAnswers = (checked) => {
+        const updatedEmbeddings = embeddings.map(embedding => {
+            let updatedAnswer = embedding.response;
+
+            if (checked) {
+//				console.log('checked');
+                // Prepend the date only if it isn't already included
+                if (!updatedAnswer.startsWith(`This answer was supplied on ${currentDate}`)) {
+                    updatedAnswer = `This answer was supplied on ${currentDate}. ${updatedAnswer}`;
+                }
+            } else {
+//				console.log('un checked');
+                // Remove the prepended date if 'isChronological' is unchecked
+                updatedAnswer = updatedAnswer.replace(new RegExp(`^This answer was supplied on ${currentDate}\\.\\s*`), '');
+            }
+
+            return { ...embedding, response: updatedAnswer };
+        });
+
+        setEmbeddings(updatedEmbeddings);
+//        console.log("Embeddings updated with chronological change:", updatedEmbeddings);
+    };
+
+    const handleChronologicalChange = (checked) => {
+        setIsChronological(checked);
+        applyChronologicalToAnswers(checked);
+    };	
     // Update tags for a specific embedding
     const updateTagsForEmbedding = (index, tags) => {
         const updatedEmbeddings = [...embeddings];
         updatedEmbeddings[index] = { ...updatedEmbeddings[index], tags };
         setEmbeddings(updatedEmbeddings);
+        console.log("Updated embeddings with new tags:", updatedEmbeddings);
     };
 	
-    // Prepare the embedding data to match the required format
+    const handleTagCheckboxChange = (tag, checked) => {
+        const updatedEmbeddings = embeddings.map(embedding => {
+            const updatedTags = checked
+                ? Array.from(new Set([...(embedding.tags || []), tag]))
+                : embedding.tags?.filter(existingTag => existingTag !== tag) || [];
+            return { ...embedding, tags: updatedTags };
+        });
+        setEmbeddings(updatedEmbeddings);
+//        console.log("Updated embeddings after tag checkbox change:", updatedEmbeddings);
+    };
+	
     const prepareEmbeddingData = (embedding) => {
+        let answer = embedding.response;
+        if (isChronological) {
+            const currentDate = new Date().toLocaleDateString();
+            answer = `This answer was supplied on ${currentDate}. ${answer}`;
+        }
         return {
             question: embedding.question,
-            answer: embedding.response,
-            tags: embedding.tags || [] // Ensure tags exist, even if empty
+            answer,
+            tags: embedding.tags || []
         };
-    };	
-
+    };
+	
     const handleDelete = (index) => {
         const updatedEmbeddings = embeddings.filter((_, i) => i !== index);
         setEmbeddings(updatedEmbeddings);
@@ -96,6 +148,53 @@ const EmbeddingModal = ({ onClose }) => {
                     </div>
                 </div>
             </div>
+		
+		
+            {/* Universal Tags Section */}
+            <div className={styles.universalTagsSection}>
+                <h4>Universal Tags</h4>
+                <div className={styles.tagContainer}>
+                    {universalTags.map((tag, index) => (
+                        <label key={index}>
+                            <input
+                                type="checkbox"
+                                onChange={(e) => handleTagCheckboxChange(tag, e.target.checked)}
+                            />
+                            {tag}
+                        </label>
+                    ))}
+                </div>
+            </div>
+
+            {/* AI Generated Tags Section */}
+            {responseEmbeddings.ai_tags && (
+                <div className={styles.aiTagsSection}>
+                    <h4>AI Generated Tags</h4>
+                    <div className={styles.tagContainer}>
+                        {responseEmbeddings.ai_tags.map((tag, index) => (
+                            <label key={index}>
+                                <input
+                                    type="checkbox"
+                                    onChange={(e) => handleTagCheckboxChange(tag, e.target.checked)}
+                                />
+                                {tag}
+                            </label>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* Chronological Checkbox Section */}
+            <div className={styles.chronologicalSection}>
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={isChronological}
+                        onChange={(e) => handleChronologicalChange(e.target.checked)}
+                    />
+                    Make Chronological (Adds: "This answer was supplied on {currentDate}" at the beginning)
+                </label>
+            </div>
 
             <div className={styles.modalContent}>
                 {embeddings.length > 0 ? (
@@ -110,6 +209,7 @@ const EmbeddingModal = ({ onClose }) => {
                             <AddEmbedding
                                 initialQuestion={embedding.question}
                                 initialAnswer={embedding.response}
+								initialTags={embedding.tags}
                                 showNavbar={false}
                                 onSaveSuccess={() => handleSaveSuccess(index)}
 								onUpdateTags={(tags) => updateTagsForEmbedding(index, tags)} // Pass tag update handler
@@ -120,7 +220,7 @@ const EmbeddingModal = ({ onClose }) => {
                     <p>No embeddings to display.</p>
                 )}
             </div>
-            <button onClick={handleSaveAllEmbeddings} className={styles.saveAllButton}>Add All Embeddings</button>
+            <button onClick={handleSaveAllEmbeddings} className={styles.saveAllButton}>Save All Embeddings</button>
             <button onClick={handleBackToChat} className={styles.closeButton}>Close</button>
         </div>
     );

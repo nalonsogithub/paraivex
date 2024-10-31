@@ -14,6 +14,8 @@ import SplashScreen from './components/SplashScreen';
 import StageEmbeddings from './components/StageEmbeddings';
 import './App.css';
 
+
+
 function App() {
     const [showSplash, setShowSplash] = useState(true);
 

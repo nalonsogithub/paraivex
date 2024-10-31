@@ -7,9 +7,9 @@ import { useAuth } from '../contexts/AuthContext';
 import { jsonrepair } from 'jsonrepair';
 
 const ChatBot = ({ prompt, setPrompt, onJsonDetected  }) => {
-    const handlePromptChange = (event) => {
-        setPrompt(event.target.value); // Updates prompt in ChatComponent
-    };
+  const handlePromptChange = (event) => {
+      setPrompt(event.target.value); // Updates prompt in ChatComponent
+  };
 //  const minHeight = maxHeight;
   const [isLoading, setIsLoading] = useState(false);
   const [isCancelled, setIsCancelled] = useState(false); // Track if streaming is cancelled
@@ -41,6 +41,15 @@ const ChatBot = ({ prompt, setPrompt, onJsonDetected  }) => {
         setIsAutoScrollEnabled(false); 
       }
     };
+	  
+    // Function to copy text to clipboard
+    const copyToClipboard = (text) => {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Message copied to clipboard!');
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+    };	  
 
     if (chatLog) {
       chatLog.addEventListener('scroll', handleScroll);
@@ -55,6 +64,12 @@ const ChatBot = ({ prompt, setPrompt, onJsonDetected  }) => {
     };
   }, [chatLogRef]);
 
+
+    // Custom renderers for ReactMarkdown to apply CSS module styles
+    const renderers = {
+        strong: ({ children }) => <strong className={styles.markdownStrong}>{children}</strong>,
+        p: ({ children }) => <p className={styles.markdownParagraph}>{children}</p>
+    };	
 	
 	
   // 3. Check if content exceeds the visible area and show the scroll button
@@ -168,6 +183,10 @@ const ChatBot = ({ prompt, setPrompt, onJsonDetected  }) => {
 //
 //    const input = prompt;
 //    const question = prompt;
+
+  const stripJSONSummary = (inputString) => {
+    return inputString.replace(/JSON Summary:/g, '').trim();
+  };
 const handleSubmit = async (event, promptOverride = null) => {
     // Prevent default form submission behavior
     if (event) {
@@ -278,6 +297,7 @@ const handleSubmit = async (event, promptOverride = null) => {
 
 				
 			  const result = checkAndParseJSON(cleanedBuffer);
+			  result.textContent = stripJSONSummary(result.textContent);
 			  console.log("Text Content:", result.textContent);
 			  console.log("JSON Content:", result.jsonContent);				
 			  if (result.jsonContent) {
@@ -436,11 +456,29 @@ const handleSubmit = async (event, promptOverride = null) => {
 					<strong>{message.user}:</strong>
 				  )}
 
-				  {/* Conditionally render the message text: 
-					  Show the text unless showLabels is false and message.user is "User" */}
+				  {/* Conditionally render the message text */}
 				  {!(showLabels === false && message.user === "User") && (
-					<ReactMarkdown>{message.text}</ReactMarkdown>
+				    <>
+					  <ReactMarkdown components={renderers}>{message.text}</ReactMarkdown>
+					  {/* Copy icon for copying the message to the clipboard */}
+					  <span 
+					    className={styles.copyIcon} 
+					    onClick={() => {
+						  navigator.clipboard.writeText(message.text).then(() => {
+						    alert('Message copied to clipboard!');
+						  }).catch(err => {
+						    console.error('Failed to copy: ', err);
+						  });
+					    }}
+					    title="Copy to clipboard"
+					  >
+					    📋
+					  </span>
+				    </>
 				  )}
+
+
+
 				</div>
 			  ))}
 

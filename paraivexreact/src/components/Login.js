@@ -16,7 +16,7 @@ const Login = ({ navigateToSignup }) => {
 		logout();
         const response = await login(username, password);
         if (response.success) {
-            navigate('/stage-embeddings');  // Redirect to MainUserPage on success
+            navigate('/user');  // Redirect to MainUserPage on success
         } else {
             setError(response.message);
         }
@@ -28,7 +28,7 @@ const Login = ({ navigateToSignup }) => {
     return (
         <div className={styles.background}>
             <div className={styles.loginContainer}>
-                <h2 className={styles.title}>Mystery Login</h2>
+                <h2 className={styles.title}>Veiled Access Point</h2>
                 {error && <p className={styles.error}>{error}</p>}
                 <form onSubmit={handleLogin} className={styles.form}>
                     <input

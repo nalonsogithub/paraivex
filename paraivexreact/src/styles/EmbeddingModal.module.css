@@ -103,3 +103,73 @@
 .backButton:hover {
     background-color: #2c3e50;
 }
+
+
+.universalTagsSection, .aiTagsSection, .chronologicalSection {
+    margin-bottom: 20px;
+}
+
+.tagContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tagButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.tagButton:hover {
+    background-color: #0056b3;
+}
+
+.chronologicalSection label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.chronologicalSection input {
+    margin-right: 5px;
+}
+
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Space between buttons */
+    margin-top: 20px; /* Adds space above the button container */
+}
+
+.saveAllButton,
+.closeButton {
+    padding: 10px 20px;
+    background-color: #3a506b; /* Matches the existing blue theme for saveAllButton */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.saveAllButton:hover {
+    background-color: #2c3e50; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.closeButton {
+    background-color: #800000; /* Darker red for close button */
+}
+
+.closeButton:hover {
+    background-color: #5a0000; /* Even darker red on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+}

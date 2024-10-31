@@ -4,18 +4,60 @@ import { useAuth } from '../contexts/AuthContext';
 import styles from '../styles/AddEmbedding.module.css';
 import Navbar from './Navbar';
 
-const AddEmbedding = ({ initialQuestion = '', initialAnswer = '', showNavbar = true, onSaveSuccess, onUpdateTags  = null}) => {
+const AddEmbedding = ({ initialQuestion = '', 
+					   initialAnswer = '',
+					   initialTags = [],
+					   showNavbar = true, 
+					   onSaveSuccess, 
+					   onUpdateTags  = null}) => {
 
-    const { brains, submitEmbedding, fetchUserDocuments, tags, getUserTags } = useAuth();  // Access brains from AuthContext for multi-select
+    const { auth, brains, submitEmbedding, fetchUserDocuments, getUserTags, getEmbeddings } = useAuth();  // Access brains from AuthContext for multi-select
     const [question, setQuestion] = useState(initialQuestion);
     const [answer, setAnswer] = useState(initialAnswer);
-	const [selectedTags, setSelectedTags] = useState([]);
+//	const [selectedTags, setSelectedTags] = useState(initialTags);
+	const [selectedTags, setSelectedTags] = useState(initialTags);
     const [customTags, setCustomTags] = useState([]);
     const [newTag, setNewTag] = useState('');  // For entering a new custom tag
 	const [loading, setLoading] = useState(true); // Loading state for documents
 	const [confirmationMessage, setConfirmationMessage] = useState('');
+    const [embeddings, setEmbeddings] = useState([]);
+    const [filteredEmbeddings, setFilteredEmbeddings] = useState([]);
+    const [tags, setTags] = useState([]);
 
+	
+	
 
+    useEffect(() => {
+        if (auth?.username) {
+            fetchUserTags(auth.username);
+            fetchEmbeddings(auth.username);
+        }
+    }, [auth]);
+			
+    const fetchUserTags = async (username) => {
+        const userTags = await getUserTags(username);
+        setTags(userTags);
+    };
+
+    const fetchEmbeddings = async (username, tags = []) => {
+        const documents = await getEmbeddings(username, tags);
+        setEmbeddings(documents);
+        setFilteredEmbeddings(documents); // Initially set filtered embeddings to all embeddings
+    };	
+			
+    // Update state when props change
+    useEffect(() => {
+        setQuestion(initialQuestion);
+    }, [initialQuestion]);
+
+    useEffect(() => {
+        setAnswer(initialAnswer);
+    }, [initialAnswer]);
+
+    useEffect(() => {
+        setSelectedTags(initialTags);
+    }, [initialTags]);			
+	
     // Handle adding or removing selected tags
     const toggleTagSelection = (tag) => {
         setSelectedTags((prevSelected) =>
