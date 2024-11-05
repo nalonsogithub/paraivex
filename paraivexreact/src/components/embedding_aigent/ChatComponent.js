@@ -1,9 +1,10 @@
 // src/components/ChatComponent.js
 import React, { useState, useEffect  } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import styles from '../styles/ChatComponent.module.css';
+//import { useAuth } from '../../contexts/AuthContext';
+import { useEmbeddingAigent } from '../../contexts/embedding_aigent/EmbeddingAigentContext';
+import styles from '../../styles/embedding_aigent/ChatComponent.module.css';
 import Navbar from './Navbar';
-import ChatBot from './ChatBot';
+import ChatBot from './../ChatBot';
 import { FaLink } from 'react-icons/fa'; // Add this line
 import UrlModal from './UrlModal';
 import { useNavigate } from 'react-router-dom';
@@ -26,7 +27,8 @@ const ChatComponent = () => {
 	const [selectedTags, setSelectedTags] = useState([]);
 	const [allTags, setAllTags] = useState([]);
 	const [enhancedPrompt, setEnhancedPrompt] = useState("");
-	const { brains, performSimilaritySearch, similaritySearchResults, setResponseEmbeddings, tags, getUserTags, fetchBingUrls, bingUrls  } = useAuth();
+//	const { brains, performSimilaritySearch, similaritySearchResults, setResponseEmbeddings, tags, getUserTags, fetchBingUrls, bingUrls  } = useAuth();
+	const { brains, performSimilaritySearch, similaritySearchResults, setResponseEmbeddings, tags, getUserTags, fetchBingUrls, bingUrls  } = useEmbeddingAigent();
 	const [cosineSimilarityThreshold, setCosineSimilarityThreshold] = useState(0.7);
 	const [originalResults, setOriginalResults] = useState([]);
 	const [displayedResults, setDisplayedResults] = useState([]);
@@ -91,7 +93,7 @@ const ChatComponent = () => {
     };
 	
     const handleEmbeddingClick = () => {
-        navigate('/embedding-modal');
+        navigate('/ea-embedding-modal');
     };
 	
 	// Filtering function
@@ -225,6 +227,7 @@ const ChatComponent = () => {
 				onJsonDetected={handleJsonDetected}
 				selectedOptions={selectedOptions}
 				contextList={isPassContext ? contextList : []}
+				setResponseEmbeddingsInParent={setResponseEmbeddings}
             />
 
             {/* Similarity Search Section */}

@@ -1,0 +1,48 @@
+/* src/styles/AppLauncher.module.css */
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 30px;
+    background-color: #f4f4f4;
+    color: #333;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.header h2 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 1.8em;
+}
+
+.header p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.tilesContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+.tile {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tile h3 {
+    color: #333;
+    font-size: 1.2em;
+}
+
+.tile:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}

@@ -1,0 +1,201 @@
+/* WOChatComponent.module.css */
+
+/* Container for the entire component */
+.chatContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background-color: #f7f9fc; /* Light background */
+    color: #333333; /* Main text color */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Navbar */
+.navbar {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+/* Checkboxes Section */
+.checkboxGroup {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.checkboxContainer {
+    display: flex;
+    align-items: center;
+    margin: 0.5rem;
+    cursor: pointer;
+}
+
+.checkboxLabel {
+    margin-left: 0.5rem;
+    font-size: 1rem;
+}
+
+.iconContainer {
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+/* Input and Search Section */
+.searchSection {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 1.5rem;
+}
+
+.input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.submitButtonContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.searchButton {
+    background-color: #4a90e2;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.searchButton:hover {
+    background-color: #357ab7;
+}
+
+/* Enhanced Prompt Section */
+.enhancedPromptSection {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 2rem;
+}
+
+.enhancedPrompt {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    min-height: 100px;
+    resize: vertical;
+    font-size: 1rem;
+}
+
+.sendEnhancedPromptContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+}
+
+.sendEnhancedPromptButton {
+    background-color: #2a9d8f;
+    color: #fff;
+    padding: 0.5rem 1.25rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sendEnhancedPromptButton:hover {
+    background-color: #207e6e;
+}
+
+/* Results Section */
+.resultsSection {
+    width: 100%;
+    max-width: 800px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.resultItem {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 1rem 0;
+}
+
+.resultItem:last-child {
+    border-bottom: none;
+}
+
+.resultItem p {
+    margin: 0.25rem 0;
+}
+
+/* Tag Section */
+.tagSection {
+    margin-bottom: 1rem;
+}
+
+.selectButton, .clearButton {
+    background-color: #e63946;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.selectButton:hover, .clearButton:hover {
+    background-color: #b52632;
+}
+
+.tagOptions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tagLabel {
+    margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+/* Modal */
+.urlModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.urlModalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}

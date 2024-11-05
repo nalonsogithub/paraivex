@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import styles from '../styles/MainUserPage.module.css';
+import { useAuth } from '../../contexts/AuthContext';
+import { useWOAigent } from '../../contexts/workout_aigent/WOAigentContext';
+import styles from '../../styles/workout_aigent/MainWOPage.module.css';
 import { useNavigate } from 'react-router-dom';
 
-const MainUserPage = () => {
-    const { auth, fetchUserDocuments, logout } = useAuth();
+const MainWOPage = () => {
+    const { auth, logout } = useAuth();
+    const { fetchWorkouts } = useWOAigent();
     const navigate = useNavigate();
 
 //    useEffect(() => {
@@ -14,9 +16,9 @@ const MainUserPage = () => {
 //    }, [auth, fetchUserDocuments]);
 
     const tiles = [
-        { title: "Add an Embedding", onClick: () => navigate('/add-embedding') },
-        { title: "Manage Embeddings", onClick: () => navigate('/manage-embeddings') },
-        { title: "Chat", onClick: () => navigate('/chat-component') },
+        { title: "Add an Workout", onClick: () => navigate('/workout-add-workout') },
+        { title: "Manage Workouts", onClick: () => navigate('/workout-manage-workout') },
+        { title: "Chat", onClick: () => navigate('/workout-chat-component') },
         { 
             title: "Logout", 
             onClick: async () => {
@@ -53,4 +55,4 @@ const MainUserPage = () => {
     );
 };
 
-export default MainUserPage; 
+export default MainWOPage; 

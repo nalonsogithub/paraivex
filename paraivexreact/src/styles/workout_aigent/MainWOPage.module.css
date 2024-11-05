@@ -1,0 +1,129 @@
+/* WOAigentContext.module.css */
+/* MainWOPage.module.css */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background-color: #f7f9fc; /* Light background */
+    color: #333333; /* Primary text color */
+}
+
+.welcomeMessage {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.tilesContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    width: 100%;
+    max-width: 800px;
+}
+
+.tile {
+    background-color: #eaeff7; /* Light blue background */
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.tile:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.accountSection {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+}
+
+
+
+/* Styling for interactive elements */
+.container button,
+.container a,
+.container .clickable {
+    cursor: pointer;
+}
+
+/* Markdown headers */
+.container h1,
+.container h2,
+.container h3 {
+    color: #0056b3; /* Deep blue for headers */
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+.container h1 {
+    font-size: 2em;
+}
+
+.container h2 {
+    font-size: 1.75em;
+}
+
+.container h3 {
+    font-size: 1.5em;
+}
+
+/* Code blocks */
+.container pre {
+    background-color: #f5f7fa; /* Light grayish background */
+    border-radius: 5px;
+    padding: 1em;
+    overflow-x: auto;
+    margin: 1em 0;
+}
+
+.container code {
+    background-color: #eaeff7; /* Inline code background */
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Dark mode */
+.darkMode {
+    background-color: #1e1e2f;
+    color: #f0f0f0;
+}
+
+.darkMode h1,
+.darkMode h2,
+.darkMode h3 {
+    color: #4a90e2; /* Light sky blue for headers */
+}
+
+.darkMode pre {
+    background-color: #2d2d3a;
+}
+
+.darkMode code {
+    background-color: #3b3b4f;
+}
+
+/* Additional styling for links and accents */
+.container a {
+    color: #2a9d8f; /* Teal for links */
+    text-decoration: none;
+}
+
+.container a:hover {
+    text-decoration: underline;
+}
+
+.container strong {
+    color: #e63946; /* Muted red for emphasis */
+}

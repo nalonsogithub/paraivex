@@ -1,0 +1,73 @@
+/* src/styles/MainUserPage.module.css */
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #111;
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.welcomeMessage h2 {
+    color: #e0e0e0;
+    margin-bottom: 5px;
+}
+
+.welcomeMessage p {
+    color: #b0b0b0;
+    margin-bottom: 20px;
+}
+
+.tilesContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.tile {
+    background-color: #222;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.tile h3 {
+    color: #fff;
+    font-size: 18px;
+}
+
+.tile:hover {
+    transform: translateY(-5px);
+    background-color: #333;
+}
+
+.accountSection {
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px solid #333;
+    text-align: center;
+}
+
+.accountSection h4 {
+    color: #e0e0e0;
+    margin-bottom: 10px;
+}
+
+.accountButton {
+    padding: 10px 20px;
+    background-color: #3a506b;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.accountButton:hover {
+    background-color: #2c3e50;
+}

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Draggable from 'react-draggable';
-import { useAuth } from '../contexts/AuthContext';
+//import { useAuth } from '../../contexts/AuthContext';
+import { useEmbeddingAigent } from '../../contexts/embedding_aigent/EmbeddingAigentContext';
+
 import AddEmbedding from './AddEmbedding';
-import styles from '../styles/EmbeddingModal.module.css';
+import styles from '../../styles/embedding_aigent/EmbeddingModal.module.css';
 import { useNavigate } from 'react-router-dom';
 
 const EmbeddingModal = ({ onClose }) => {
-    const { responseEmbeddings = {}, setResponseEmbeddings, submitEmbedding, tags, getUserTags  } = useAuth();
+//    const { responseEmbeddings = {}, setResponseEmbeddings, submitEmbedding, tags, getUserTags  } = useAuth();
+    const { responseEmbeddings = {}, setResponseEmbeddings, submitEmbedding, tags, getUserTags  } = useEmbeddingAigent();
     const [embeddings, setEmbeddings] = useState(Array.isArray(responseEmbeddings.embeddings) ? responseEmbeddings.embeddings : []);
     const [universalTags, setUniversalTags] = useState([]);
     const [useAiTags, setUseAiTags] = useState(false);
@@ -134,7 +137,7 @@ const EmbeddingModal = ({ onClose }) => {
 
 
     const handleBackToChat = () => {
-        navigate('/chat-component');
+        navigate('/ea-chat-component');
     };
 
     return (

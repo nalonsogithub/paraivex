@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import styles from '../styles/MainUserPage.module.css';
+import { useAuth } from '../../contexts/AuthContext';
+import { useEmbeddingAigent } from '../../contexts/embedding_aigent/EmbeddingAigentContext';
+import styles from '../../styles/embedding_aigent/MainUserPage.module.css';
 import { useNavigate } from 'react-router-dom';
 
 const MainUserPage = () => {
-    const { auth, fetchUserDocuments, logout } = useAuth();
+    const { auth, logout } = useAuth();
+    const { fetchUserDocuments } = useEmbeddingAigent();
     const navigate = useNavigate();
 
 //    useEffect(() => {
@@ -14,9 +16,9 @@ const MainUserPage = () => {
 //    }, [auth, fetchUserDocuments]);
 
     const tiles = [
-        { title: "Add an Embedding", onClick: () => navigate('/add-embedding') },
-        { title: "Manage Embeddings", onClick: () => navigate('/manage-embeddings') },
-        { title: "Chat", onClick: () => navigate('/chat-component') },
+        { title: "Add an Embedding", onClick: () => navigate('/ea-add-embedding') },
+        { title: "Manage Embeddings", onClick: () => navigate('/ea-manage-embeddings') },
+        { title: "Chat", onClick: () => navigate('/ea-chat-component') },
         { 
             title: "Logout", 
             onClick: async () => {

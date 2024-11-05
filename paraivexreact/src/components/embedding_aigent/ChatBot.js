@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
-import styles from '../styles/embedding_aigent/ChatBot.module.css';
+import styles from '../../styles/embedding_aigent/ChatBot.module.css';
 import { useSwipeable } from 'react-swipeable';
-import getBaseURL from '../config';
+import getBaseURL from '../../config';
 //import { useAuth } from '../../contexts/AuthContext';
-import { useChatAigent } from '../contexts/ChatContext';
+import { useEmbeddingAigent } from '../../contexts/embedding_aigent/EmbeddingAigentContext';
 import { jsonrepair } from 'jsonrepair';
 
-const ChatBot = ({ prompt, setPrompt, onJsonDetected, selectedOptions, contextList, setResponseEmbeddingsInParent   }) => {
+const ChatBot = ({ prompt, setPrompt, onJsonDetected, selectedOptions, contextList   }) => {
 //  console.log('Received contextList:', contextList);	
   const handlePromptChange = (event) => {
       setPrompt(event.target.value); // Updates prompt in ChatComponent
@@ -19,7 +19,7 @@ const ChatBot = ({ prompt, setPrompt, onJsonDetected, selectedOptions, contextLi
   const [userInput, setUserInput] = useState("");
   const [visibleQuestionCount, setVisibleQuestionCount] = useState(3);	
   const baseURL = getBaseURL();
-  const { setResponseEmbeddings, chatHistory, updateChatHistory,  followup, setFollowup, fetchBingUrls} = useChatAigent();
+  const { setResponseEmbeddings, chatHistory, updateChatHistory,  followup, setFollowup, fetchBingUrls} = useEmbeddingAigent();
 	
 	
   const showLabels = true;
@@ -278,7 +278,6 @@ const handleSubmit = async (event, promptOverride = null) => {
 			  console.log("JSON Content:", result.jsonContent);				
 			  if (result.jsonContent) {
 				  setResponseEmbeddings(result.jsonContent);
-				  setResponseEmbeddingsInParent(result.jsonContent);
 				  setFollowup(result.jsonContent.followup || '');
 				  onJsonDetected(true);
 			  }

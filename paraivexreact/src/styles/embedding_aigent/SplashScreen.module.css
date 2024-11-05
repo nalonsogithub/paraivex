@@ -1,0 +1,44 @@
+/* src/styles/SplashScreen.module.css */
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.splashContent {
+    background: #ffffff;
+    color: #333;
+    width: 80%;
+    max-width: 500px;
+    height: 80vh; /* Fixed height */
+    padding: 20px;
+    border-radius: 8px;
+    overflow-y: auto; /* Enable scrolling if content overflows */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    cursor: default;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+.typingText {
+    white-space: pre-line;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+}
+
+.splashContent h1,
+.splashContent h2 {
+    color: #000;
+}
+
+
+
+

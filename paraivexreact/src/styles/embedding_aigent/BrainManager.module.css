@@ -1,0 +1,38 @@
+/* src/styles/BrainManager.module.css */
+.brainContainer {
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #111;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+.brainItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #222;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.15);
+}
+
+.brainName {
+    font-weight: bold;
+    color: #e0e0e0;
+}
+
+.deleteButton {
+    background: transparent;
+    color: #f44336; /* Red color for delete */
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.deleteButton:hover {
+    color: #ff6b6b;
+}
