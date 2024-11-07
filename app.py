@@ -224,6 +224,7 @@ class EventHandler(AssistantEventHandler):
 @app.route("/")
 @app.route("/<path:path>")
 def serve_react_app(path=""):
+    print('GREETINGS FROM PARAIVEX')
     full_path = os.path.join(app.static_folder, path)
 
     # INITIALIZE VARIABLES
