@@ -705,7 +705,7 @@ def ask_stream():
                 content=message['content'],
             )
 
-        yield 'update: Generating response...' + assistant_id + ''\n\n'
+        yield f'update: Generating response... Assistant ID: {assistant_id}\n\n'
 
         try:
             # If no canned response is used, proceed with the normal chatbot interaction
