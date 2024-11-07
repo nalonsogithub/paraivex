@@ -707,34 +707,38 @@ def ask_stream():
 
         yield 'update: Generating response...\n\n'
 
-        # If no canned response is used, proceed with the normal chatbot interaction
-        event_handler = EventHandler(message_queue)
-        with client.beta.threads.runs.stream(
-                thread_id=thread_id,
-                assistant_id=assistant_id,
-                event_handler=event_handler,
-        ) as stream:
-            try:
-                for st in stream:
-                    if not message_queue.empty():
-                        message = message_queue.get_nowait()
-                        buffer = message
-                        entire_response += message
-                        yield message
+        try:
+            # If no canned response is used, proceed with the normal chatbot interaction
+            event_handler = EventHandler(message_queue)
+            with client.beta.threads.runs.stream(
+                    thread_id=thread_id,
+                    assistant_id=assistant_id,
+                    event_handler=event_handler,
+            ) as stream:
+                try:
+                    for st in stream:
+                        if not message_queue.empty():
+                            message = message_queue.get_nowait()
+                            buffer = message
+                            entire_response += message
+                            yield message
 
-            except Exception as e:
-                print(f"Error occurred: {e}")
-                yield f'data: Error occurred: {str(e)}\n\n'
-                raise
-            finally:
-                stream.until_done()
+                except Exception as e:
+                    print(f"Error occurred: {e}")
+                    yield f'data: Error occurred: {str(e)}\n\n'
+                    raise
+                finally:
+                    stream.until_done()
 
-            # Yield any remaining buffer
-            if buffer:
-                yield buffer
+                # Yield any remaining buffer
+                if buffer:
+                    yield buffer
 
-        # Check for SITE_LOCATION in the entire response after streaming is done
-        print('ENTIRE RESPONSE', entire_response)
+            # Check for SITE_LOCATION in the entire response after streaming is done
+            print('ENTIRE RESPONSE', entire_response)
+        except Exception as e:
+            print("Error occurred during stream:", str(e))
+            yield f'data: Error occurred during stream: {str(e)}\n\n'
 
     if collected_bing_results:
         print('COLLECTED BING RESULTS', collected_bing_results)
