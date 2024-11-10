@@ -484,6 +484,14 @@ const handleSubmit = async (event, promptOverride = null) => {
                 )}
 
 		<form onSubmit={handleSubmit} className={styles.AigentinputForm}>
+		  <textarea
+			className={styles.AigentinputField}
+			value={prompt}
+			onChange={handlePromptChange}
+			placeholder="Type your prompt..."
+			rows={2} // Start with 2 lines
+		  />
+{/*
 			<input
 				type="text"
 				className={styles.AigentinputField}
@@ -491,6 +499,7 @@ const handleSubmit = async (event, promptOverride = null) => {
 				onChange={handlePromptChange}
 				placeholder="Type your prompt..."
 			  />
+*/}
 			  {isLoading ? (
 				<button onClick={cancelResponse} className={styles.AigentcancelButton}>✕</button>
 
