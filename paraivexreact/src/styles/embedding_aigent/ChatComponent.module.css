@@ -193,13 +193,15 @@ textarea, input[type="text"], input[type="number"] {
 
 /* Checkbox Group Styling */
 .checkboxGroup {
-    display: flex;
-    justify-content: space-around;
+    display: grid; /* Use grid layout for better flexibility */
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive columns */
+    gap: 10px; /* Space between checkboxes */
     margin-bottom: 15px;
     padding: 10px 0;
     background-color: #222;
     border-radius: 8px;
 }
+
 
 .checkboxLabel {
     display: flex;
@@ -208,7 +210,9 @@ textarea, input[type="text"], input[type="number"] {
     font-size: 0.85em;
     font-weight: bold;
     cursor: pointer;
+    margin-bottom: 5px; /* Add space between label and icon */
 }
+
 
 input[type="checkbox"] {
     margin-right: 8px;
@@ -216,16 +220,21 @@ input[type="checkbox"] {
     accent-color: #3a506b; /* Matches button color */
 }
 
-
 .checkboxContainer {
     border: 1px solid #ddd;
     padding: 10px;
-    margin: 5px;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column; /* Stack label and icon vertically */
+    align-items: center; /* Center align for better aesthetics */
 }
 
 .iconContainer {
     margin-top: 5px;
     color: #007bff; /* Color for the icon */
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 

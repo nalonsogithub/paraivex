@@ -64,8 +64,13 @@
 
 /*  added later*/
   resize: vertical; /* Allows vertical resizing only */
-  min-height: 40px; /* Ensures a minimum height */
+  min-height: 20px; /* Height for 1 line */
   max-height: 150px; /* Optional max height to prevent excessive resizing */
+  overflow: hidden; /* Prevent scrollbars */
+/*
+  min-height: 40px; 
+  max-height: 150px; 
+*/
 	
 }
 

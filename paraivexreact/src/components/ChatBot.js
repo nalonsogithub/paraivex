@@ -9,9 +9,11 @@ import { jsonrepair } from 'jsonrepair';
 
 const ChatBot = ({ prompt, setPrompt, onJsonDetected, selectedOptions, contextList, setResponseEmbeddingsInParent   }) => {
 //  console.log('Received contextList:', contextList);	
-  const handlePromptChange = (event) => {
-      setPrompt(event.target.value); // Updates prompt in ChatComponent
-  };
+    const handlePromptChange = (event) => {
+        const newValue = event.target.value;
+//        console.log('ChatBot is updating prompt:', newValue); 
+        setPrompt(newValue); // Propagate the change to ChatComponent
+    };	
 //  const minHeight = maxHeight;
   const [isLoading, setIsLoading] = useState(false);
   const [isCancelled, setIsCancelled] = useState(false); // Track if streaming is cancelled
@@ -415,9 +417,15 @@ const handleSubmit = async (event, promptOverride = null) => {
     }
   };
 
-    useEffect(() => {
-        setMessages(chatHistory);
-    }, [chatHistory]);
+  useEffect(() => {
+      setMessages(chatHistory);
+  }, [chatHistory]);
+
+  const adjustTextareaHeight = (event) => {
+	 const textarea = event.target;
+	 textarea.style.height = "auto"; // Reset height to calculate new scroll height
+	 textarea.style.height = `${textarea.scrollHeight}px`; // Adjust height based on content
+  };
 	
   return (
     <div className={`${styles.AigentContainer} ${isLoading ? styles.waitingCursor : ''}`}>	  
@@ -484,6 +492,26 @@ const handleSubmit = async (event, promptOverride = null) => {
                 )}
 
 		<form onSubmit={handleSubmit} className={styles.AigentinputForm}>
+		<textarea
+		  className={styles.AigentinputField}
+		  value={prompt}
+  		  onChange={(event) => {
+//			  console.log('ChatBot textarea onChange:', event.target.value); 
+			  handlePromptChange(event);
+		  }}
+		  onFocus={(e) => e.target.rows = 3} // Expand to 3 lines on focus
+		  onBlur={(e) => e.target.rows = 1} // Collapse back to 1 line when focus is lost, if no content
+		  onInput={(e) => adjustTextareaHeight(e)} // Adjust height dynamically as the user types
+		  onKeyDown={(e) => {
+			if (e.key === 'Enter' && !e.shiftKey) { // Check for Enter without Shift
+			  e.preventDefault(); // Prevent adding a new line
+			  handleSubmit(e); // Call the submit function
+			}
+		  }}
+		  placeholder="Type your prompt..."
+		  rows={1} // Initial number of rows
+		/>
+{/*
 		  <textarea
 			className={styles.AigentinputField}
 			value={prompt}
@@ -491,7 +519,6 @@ const handleSubmit = async (event, promptOverride = null) => {
 			placeholder="Type your prompt..."
 			rows={2} // Start with 2 lines
 		  />
-{/*
 			<input
 				type="text"
 				className={styles.AigentinputField}

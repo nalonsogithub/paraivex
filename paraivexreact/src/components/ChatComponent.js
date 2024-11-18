@@ -143,14 +143,16 @@ const ChatComponent = () => {
 		};
 	};
 	
-    // Synchronize userPrompt and prompt
-    const handleUserPromptChange = (value) => {
-        setUserPrompt(value);
-        setPrompt(value); // Keep prompt in sync with userPrompt
-    };
+	// Update prompt and userPrompt in sync
+	const handleUserPromptChange = (value) => {
+		console.log('Updating userPrompt and prompt:', value);
+		setUserPrompt(value); // Update userPrompt state
+		setPrompt(value); // Ensure prompt remains in sync
+	};
 	
 	
 	const handleSendEnhancedPrompt = () => {
+		console.log('in handleSendEnhancedPrompt', enhancedPrompt);
 		setPrompt(enhancedPrompt);
 	};
 	
@@ -218,14 +220,18 @@ const ChatComponent = () => {
             </div>
 
             {/* Chatbot Section */}
-            <ChatBot
-                prompt={prompt}
-                setPrompt={setPrompt} // Pass setPrompt to allow updates from ChatBot
-                onSubmit={() => handleSendEnhancedPrompt()} // Triggered when enhanced prompt is sent
+			<ChatBot
+				prompt={prompt}
+				setPrompt={(value) => {
+				    console.log('ChatBot setPrompt:', value);
+					setPrompt(value); // Update centralized prompt state
+					setUserPrompt(value); // Keep userPrompt in sync
+				}}
+				onSubmit={() => handleSendEnhancedPrompt()} // Triggered when enhanced prompt is sent
 				onJsonDetected={handleJsonDetected}
 				selectedOptions={selectedOptions}
 				contextList={isPassContext ? contextList : []}
-            />
+			/>
 
             {/* Similarity Search Section */}
 		  <div className={styles.header}>
